@@ -23,9 +23,9 @@ const StoryUploader: React.FC<StoryUploaderProps> = ({ onUploadComplete }) => {
       return;
     }
 
-    // Validate file size (max 100MB)
-    if (file.size > 100 * 1024 * 1024) {
-      setError('Fișierul trebuie să fie mai mic de 100MB');
+    // Validate file size (max 350MB)
+    if (file.size > 350 * 1024 * 1024) {
+      setError('Fișierul trebuie să fie mai mic de 350MB');
       return;
     }
 

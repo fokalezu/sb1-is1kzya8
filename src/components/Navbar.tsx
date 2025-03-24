@@ -184,41 +184,11 @@ const Navbar = () => {
                 className="flex-shrink-0 flex items-center text-purple-600 font-bold text-xl gap-2 mr-8"
               >
                 <img 
-                  src="/escortino-logo.png" 
+                  src="https://api.escortino.ro/storage/v1/object/public/profiles/logo/escortino-logo.png" 
                   alt="Escortino"
                   className="h-8 w-auto"
                 />
               </Link>
-
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-4">
-                {user && (
-                  <Link
-                    to="/dashboard"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center ${
-                      isActive('/dashboard') 
-                        ? 'bg-purple-100 text-purple-700'
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                    }`}
-                  >
-                    <LayoutDashboard className="h-4 w-4 mr-2" />
-                    Administrare Cont
-                  </Link>
-                )}
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      isActive('/admin')
-                        ? 'bg-purple-100 text-purple-700'
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                    }`}
-                  >
-                    <Shield className="h-4 w-4 inline-block mr-1" />
-                    Admin
-                  </Link>
-                )}
-              </div>
             </div>
 
             {/* Center Section: Search */}
