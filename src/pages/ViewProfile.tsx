@@ -133,7 +133,7 @@ const ViewProfile = () => {
           setProfile(data as Profile);
           
           // Record view if not the profile owner
-          if (user?.id !== data .user_id) {
+          if (user?.id !== data.user_id) {
             await recordProfileView(data.id);
           }
         }

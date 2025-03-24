@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Link, useNavigate, Navigate, useSearchParams } from 'react-router-dom';
-import { Eye, EyeOff, Mail, User, Lock, AlertTriangle, Check, Users } from 'lucide-react';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Eye, EyeOff, Mail, User, Lock, AlertTriangle, Check } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -76,8 +76,6 @@ const Register = () => {
     feedback: { warning: '', suggestions: [] }
   });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const [searchParams] = useSearchParams();
-  const referralCode = searchParams.get('ref');
   const navigate = useNavigate();
   const { signUp, user } = useAuth();
 
@@ -126,35 +124,6 @@ const Register = () => {
           });
 
         if (profileError) throw profileError;
-
-        // If there's a referral code, record the referral
-        if (referralCode) {
-          // Find the referrer profile
-          const { data: referrerData, error: referrerError } = await supabase
-            .from('profiles')
-            .select('id, user_id, referral_count')
-            .eq('referral_code', referralCode)
-            .single();
-
-          if (!referrerError && referrerData) {
-            // Create referral record
-            await supabase
-              .from('referrals')
-              .insert({
-                referrer_user_id: referrerData.user_id,
-                referred_user_id: userData.user.id,
-                created_at: new Date().toISOString()
-              });
-
-            // Increment referral count for referrer
-            await supabase
-              .from('profiles')
-              .update({ 
-                referral_count: (referrerData.referral_count || 0) + 1 
-              })
-              .eq('id', referrerData.id);
-          }
-        }
       }
 
       navigate('/dashboard');
@@ -182,13 +151,6 @@ const Register = () => {
           <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded flex items-start">
             <AlertTriangle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
             <p>{error}</p>
-          </div>
-        )}
-
-        {referralCode && (
-          <div className="mb-4 p-3 bg-purple-100 border border-purple-200 text-purple-700 rounded flex items-start">
-            <Users className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-            <p>Te înregistrezi folosind un cod de recomandare</p>
           </div>
         )}
 
@@ -326,7 +288,7 @@ const Register = () => {
           {/* reCAPTCHA */}
           <div className="flex justify-center">
             <ReCAPTCHA
-              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Replace with your actual site key
+              sitekey="6LfSZOEqAAAAAGdYsIhLFS0mIpeLfqQSpWihXIb-" // Replace with your actual site key
               onChange={(token) => setCaptchaToken(token)}
             />
           </div>

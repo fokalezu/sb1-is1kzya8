@@ -17,7 +17,7 @@ const Contact = () => {
       setError(null);
       
       // Create mailto URL
-      const mailtoUrl = `mailto:madalincraciunica@gmail.com?subject=Contact Dating CMS - ${encodeURIComponent(name)}&body=${encodeURIComponent(
+      const mailtoUrl = `mailto:madalincraciunica@gmail.com?subject=Contact Escortino.ro - ${encodeURIComponent(name)}&body=${encodeURIComponent(
         `Nume: ${name}\nEmail: ${email}\n\nMesaj:\n${message}`
       )}`;
       
