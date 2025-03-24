@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -18,6 +18,7 @@ import Cookies from './pages/Cookies';
 import Contact from './pages/Contact';
 import AccountTypes from './pages/AccountTypes';
 import LoginHistory from './pages/LoginHistory';
+import SitemapGenerator from './pages/SitemapGenerator';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
@@ -25,6 +26,7 @@ import AgeVerification from './components/AgeVerification';
 import PageTitle from './components/PageTitle';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import { setupErrorHandling } from './utils/errorHandler';
 
 // Loading component for the app
 const LoadingScreen = () => (
@@ -36,6 +38,57 @@ const LoadingScreen = () => (
 // Main app component with loading state
 const AppContent = () => {
   const { isLoading } = useAuth();
+
+  useEffect(() => {
+    // Setup error handling to hide file paths
+    setupErrorHandling();
+    
+    // Disable right-click to prevent viewing source
+    document.addEventListener('contextmenu', (e) => {
+      // Allow right-click on form elements
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return true;
+      }
+      e.preventDefault();
+      return false;
+    });
+    
+    // Disable keyboard shortcuts for viewing source
+    document.addEventListener('keydown', (e) => {
+      // Disable Ctrl+U (View Source)
+      if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Disable F12 (Developer Tools)
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Disable Ctrl+Shift+I (Developer Tools)
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Disable Ctrl+Shift+J (Developer Tools)
+      if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+        e.preventDefault();
+        return false;
+      }
+      
+      // Disable Ctrl+Shift+C (Inspect Element)
+      if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        return false;
+      }
+      
+      return true;
+    });
+  }, []);
 
   return (
     <>
@@ -66,6 +119,7 @@ const AppContent = () => {
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/login-history" element={<LoginHistory />} />
+                <Route path="/sitemap-generator" element={<SitemapGenerator />} />
               </Route>
             </Routes>
           </div>
