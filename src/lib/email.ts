@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'madalincraciunica@gmail.com',
-    pass: 'your_app_password_here' // You'll need to generate an App Password in your Google Account
+    pass: 'usoa nkbc yocx argr' // You'll need to generate an App Password in your Google Account
   }
 });
 
@@ -19,7 +19,7 @@ export const sendEmail = async (data: EmailData) => {
   const mailOptions = {
     from: data.email,
     to: 'madalincraciunica@gmail.com',
-    subject: `Contact Dating CMS - ${data.name}`,
+    subject: `Contact Escortino.ro - ${data.name}`,
     text: `
 Nume: ${data.name}
 Email: ${data.email}
